@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Inang: 127.0.0.1
--- Waktu pembuatan: 28 Okt 2013 pada 11.17
+-- Waktu pembuatan: 29 Okt 2013 pada 09.48
 -- Versi Server: 5.5.27
 -- Versi PHP: 5.4.7
 
@@ -11,7 +11,7 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
 
 --
--- Basis data: `client.mysmartfx`
+-- Basis data: `foreximf`
 --
 
 -- --------------------------------------------------------
@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS `acl_resources` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`),
   KEY `parent` (`parent`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=24 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=25 ;
 
 --
 -- Dumping data untuk tabel `acl_resources`
@@ -124,13 +124,17 @@ INSERT INTO `acl_rules` (`role_id`, `resource_id`, `access`, `priviledge`) VALUE
 (2, 4, 'allow', NULL),
 (2, 19, 'allow', NULL),
 (2, 20, 'allow', NULL),
+(5, 1, 'allow', NULL),
+(5, 3, 'allow', NULL),
+(5, 4, 'allow', NULL),
+(5, 5, 'allow', NULL),
+(5, 19, 'deny', NULL),
 (5, 20, 'deny', NULL),
 (5, 22, 'allow', NULL),
 (5, 23, 'allow', NULL),
 (6, 1, 'allow', NULL),
 (6, 3, 'allow', NULL),
-(6, 4, 'allow', NULL),
-(6, 5, 'allow', NULL);
+(6, 4, 'allow', NULL);
 
 -- --------------------------------------------------------
 
@@ -700,6 +704,7 @@ CREATE TABLE IF NOT EXISTS `auth_autologin` (
 
 CREATE TABLE IF NOT EXISTS `auth_users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(15) NOT NULL,
   `first_name` varchar(50) NOT NULL,
   `last_name` varchar(50) NOT NULL,
   `username` varchar(255) NOT NULL,
@@ -715,16 +720,14 @@ CREATE TABLE IF NOT EXISTS `auth_users` (
   UNIQUE KEY `username` (`username`),
   UNIQUE KEY `email` (`email`),
   KEY `role_id` (`role_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1707 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
 --
 -- Dumping data untuk tabel `auth_users`
 --
 
-INSERT INTO `auth_users` (`id`, `first_name`, `last_name`, `username`, `email`, `password`, `investor_password`, `lang`, `registered`, `active`, `role_id`, `approval`) VALUES
-(1, 'Administrator', 'Tea', 'admin', 'admin@vmt.co.id', '$2a$08$dxSn4NG3GUxu3XGLr4niIuemUHBohdWdBobNsRi6WpBE.h8zHNmXO', '', 'id', '2012-03-15 19:23:59', '1', 1, 0),
-(1705, 'jafar', 'sidik', '84113', 'mjsnux@gmail.com', '$2a$08$f6ahmfewe/VHOeYZSCJMIeJUbc.Mc9tLUy206Zyz/ESqig49HjrVK', 'XRzUjD', 'id', '2013-10-18 06:28:03', '1', 5, 0),
-(1706, 'Rahman', 'Firmansyah', '96348', 'rahmanf88@gmail.com', '', '', 'id', '2013-10-28 11:10:36', '0', 2, 0);
+INSERT INTO `auth_users` (`id`, `title`, `first_name`, `last_name`, `username`, `email`, `password`, `investor_password`, `lang`, `registered`, `active`, `role_id`, `approval`) VALUES
+(1, '', 'Administrator', 'Tea', 'admin', 'admin@vmt.co.id', '$2a$08$dxSn4NG3GUxu3XGLr4niIuemUHBohdWdBobNsRi6WpBE.h8zHNmXO', '', 'id', '2012-03-15 19:23:59', '1', 1, 0);
 
 -- --------------------------------------------------------
 
@@ -795,12 +798,7 @@ CREATE TABLE IF NOT EXISTS `ci_sessions` (
 --
 
 INSERT INTO `ci_sessions` (`session_id`, `ip_address`, `user_agent`, `last_activity`, `user_data`) VALUES
-('1dcef51e1020cabb04869003d5a0ea65', '::1', 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/30.0.1599.69 Safari/537.36', 1382075394, 'a:6:{s:9:"user_data";s:0:"";s:9:"role_name";s:4:"Demo";s:9:"auth_user";s:4:"1705";s:13:"auth_loggedin";b:1;s:4:"lang";s:2:"id";s:7:"role_id";s:1:"5";}'),
-('359a62786c62d0c5a03fd29d4e3d5285', '192.168.1.8', 'Mozilla/5.0 (Windows NT 5.1; rv:24.0) Gecko/20100101 Firefox/24.0', 1382955283, 'a:2:{s:9:"user_data";s:0:"";s:9:"role_name";s:5:"Guest";}'),
-('4dc66740c7d835388bf4c0e4e0309fa4', '192.168.1.8', 'Mozilla/5.0 (Windows NT 5.1; rv:24.0) Gecko/20100101 Firefox/24.0', 1382954946, 'a:2:{s:9:"user_data";s:0:"";s:9:"role_name";s:5:"Guest";}'),
-('728da55eb9e358712cb7a2dc283e62d9', '::1', 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/30.0.1599.69 Safari/537.36', 1382069882, 'a:2:{s:9:"user_data";s:0:"";s:9:"role_name";s:5:"Guest";}'),
-('a0ff503e11be0c6d2b47823552e1e76a', '::1', 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/30.0.1599.69 Safari/537.36', 1382358579, 'a:2:{s:9:"user_data";s:0:"";s:9:"role_name";s:5:"Guest";}'),
-('f295b851a5c67844588d5885f364560e', '::1', 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/30.0.1599.101 Safari/537.36', 1382955260, 'a:2:{s:9:"user_data";s:0:"";s:9:"role_name";s:5:"Guest";}');
+('4515920aa96970b00f85085c0dd75b0a', '::1', 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/30.0.1599.101 Safari/537.36', 1383036268, 'a:6:{s:9:"user_data";s:0:"";s:9:"role_name";s:5:"Guest";s:9:"auth_user";b:0;s:13:"auth_loggedin";b:0;s:4:"lang";s:2:"id";s:7:"role_id";s:1:"5";}');
 
 -- --------------------------------------------------------
 
@@ -1072,22 +1070,14 @@ INSERT INTO `country` (`id`, `iso`, `name`, `nicename`, `iso3`, `numcode`, `phon
 
 CREATE TABLE IF NOT EXISTS `demo_account` (
   `email` varchar(100) NOT NULL,
-  `title` varchar(40) DEFAULT NULL,
-  `first_name` varchar(50) DEFAULT NULL,
-  `last_name` varchar(50) DEFAULT NULL,
   `city` varchar(50) DEFAULT NULL,
-  `date_of_birth` varchar(30) DEFAULT NULL,
+  `tanggal_lahir` varchar(5) NOT NULL,
+  `bulan_lahir` varchar(5) NOT NULL,
+  `tahun_lahir` varchar(8) NOT NULL,
   `phone` varchar(30) DEFAULT NULL,
   `balance` varchar(30) DEFAULT NULL,
   UNIQUE KEY `email` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data untuk tabel `demo_account`
---
-
-INSERT INTO `demo_account` (`email`, `title`, `first_name`, `last_name`, `city`, `date_of_birth`, `phone`, `balance`) VALUES
-('mjsnux@gmail.com', 'Mr.', 'jafar', 'sidik', 'Kab. Pidie Jaya', '16-07-2031', '6283815644435', '$10000');
 
 -- --------------------------------------------------------
 
@@ -1123,11 +1113,10 @@ INSERT INTO `link` (`id`, `link`) VALUES
 CREATE TABLE IF NOT EXISTS `live_account` (
   `id` int(100) NOT NULL AUTO_INCREMENT,
   `reg_option` enum('Individual','Join') NOT NULL,
-  `title` enum('Mr.','Mrs.','Miss') NOT NULL,
-  `first_name` varchar(50) NOT NULL,
-  `last_name` varchar(50) NOT NULL,
-  `date_of_birth` varchar(30) NOT NULL,
   `type_account` varchar(30) NOT NULL,
+  `tanggal_lahir` varchar(5) NOT NULL,
+  `bulan_lahir` varchar(20) NOT NULL,
+  `tahun_lahir` varchar(15) NOT NULL,
   `personal_name` varchar(50) DEFAULT NULL,
   `personal_idnumber` varchar(100) NOT NULL,
   `personal_iddocument` varchar(150) DEFAULT NULL,
@@ -1157,7 +1146,7 @@ CREATE TABLE IF NOT EXISTS `live_account` (
   `additional_info_website` varchar(50) DEFAULT NULL,
   `additional_info_aboutme` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=17 ;
 
 --
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
