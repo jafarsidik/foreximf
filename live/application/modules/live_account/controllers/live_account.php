@@ -195,10 +195,10 @@ class Live_account extends Admin_Controller
 				'lang'			=>'id'				
 			);
 			$query1 = $this->mgeneral->update(array('username'=>$key), $data_login,'auth_users');			
-			echo "Akun live account anda sudah aktif tapi belum di approval oleh admin";
 			
-			//$this->data['user'] 	=  $this->mgeneral->getWhere(array('username'=>$key),'auth_users');
-			//$this->template->build('active');
+			
+			
+			$this->template->build('active');
 		}
 		
 	}/* 
