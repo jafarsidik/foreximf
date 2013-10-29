@@ -66,7 +66,7 @@ class Demo extends MY_Controller
 									'balance'		=>$this->input->post('balance')
 								);
 			
-			$links 			="http://client.mysmartfx.vmt.co.id/index.php/demo/demo/active/?key=".$user_code; //change your url
+			$links 			="http://demo.mysmartfx.vmt.co.id/index.php/demo/demo/active/?key=".$user_code; //change your url
 			$pesan 			=
 								"
 								Dear All Valuable Customer,
@@ -111,7 +111,7 @@ class Demo extends MY_Controller
 					$this->email->message($pesan);
 					$this->email->send();
 					$result['retCode']	= '00';
-					$result['url']		= 'http://localhost/foreximf/demo/'; //change your url
+					$result['url']		= 'http://demo.mysmartfx.vmt.co.id/'; //change your url
 					$result['retMsg']	= 'Success To Registrasi but not active your account.';
 					$result['result']	= TRUE;				
 				}
@@ -166,7 +166,7 @@ class Demo extends MY_Controller
 				$this->email->message($pesan);
 				$this->email->send();
 				$result['retCode']	= '00';
-				$result['url']		= 'http://localhost/foreximf/live'; //change your url
+				$result['url']		= 'http://demo.mysmartfx.vmt.co.id/'; //change your url
 				$result['retMsg']	= 'Success To Activation your account.';
 				$result['result']	= TRUE;
 			}else{				

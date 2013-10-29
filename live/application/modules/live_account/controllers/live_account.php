@@ -170,7 +170,7 @@ class Live_account extends Admin_Controller
 				$this->email->subject('Live Account Register');
 				$this->email->message($pesan);
 				$result['retCode'] = '00';
-				$result['url']		= 'http://localhost/foreximf/live/'; //change your url
+				$result['url']		= 'http://client.mysmartfx.vmt.co.id/'; //change your url
 				$result['retMsg'] = 'Success To Registrasi but not active your account.';
 				$result['result'] = TRUE;
 			}else{				
@@ -201,44 +201,7 @@ class Live_account extends Admin_Controller
 			$this->template->build('active');
 		}
 		
-	}/* 
-	function exe_active(){
-		$result	= array();
-		if(!isset($_POST['password']) and !isset($_POST['c_password'])){
-			$result['retCode'] = '10';
-			$result['retMsg'] = 'Invalid param.';
-			$result['result'] = FALSE;
-		}else{
-			
-			$date	= date('Y-m-d H:i:s');
-			$id 	= $this->input->post('id');
-			$hash	= $this->input->post('c_password');
-			$data_login	= array(
-				
-				'password'		=> $this->ci->passwordhash->HashPassword($hash),
-				'active'		=>'1',
-				'registered'	=>$date,
-				'lang'			=>'id',
-				'role_id'		=>5,
-				'investor_password'	=>$this->input->post('investor_p'),
-			);
-			if($data_login != null){
-				
-				$query1 = $this->mgeneral->update(array('id'=>$id), $data_login,'auth_users');
-				
-				$result['retCode'] = '00';
-				$result['retMsg'] = 'Success To Activation Register your account.';
-				$result['result'] = TRUE;
-			}else{				
-				$result['retCode'] = '01';
-				$result['retMsg'] = 'Error Activation Register your account.';
-				$result['result'] = TRUE;
-			}
-		}
-		echo json_encode($result);
-			
-	} */
-	
+	}
 	function agent_code(){
 		// tangkap variabel keyword dari URL
       $keyword = $this->uri->segment(3);

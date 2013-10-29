@@ -1,6 +1,18 @@
  <style type="text/css">
  .wrapper-dropdown-5 {
-    
+    /* Size & position */
+    position: relative;
+    width: 200px;
+    margin: 0 auto;
+    padding: 12px 15px;
+ 
+    /* Styles */
+    background: #fff;
+    border-radius: 5px;
+    box-shadow: 0 1px 0 rgba(0,0,0,0.2);
+    cursor: pointer;
+    outline: none;
+    transition: all 0.3s ease-out;
 }
  
 .wrapper-dropdown-5:after { /* Little arrow */
@@ -21,6 +33,7 @@
     top: 100%;
     left: 0;
     right: 0;
+	line-hight
  
     /* Styles */
     background: #fff;
@@ -86,7 +99,6 @@
  <div class="span3" id="sidebar">
  <?php $menus = $this->config->item('main_nav'); ?>
                     
-					<ul class="nav nav-list bs-docs-sidenav nav-collapse collapse">
                   
 						<?php
 							foreach($menus as $url => $label):
@@ -107,6 +119,7 @@
 							<?php
 								else:
 							?>
+					<ul class="nav nav-list bs-docs-sidenav nav-collapse collapse">
 							<li <?php if (substr(uri_string(), 0, strlen($url)) == $url) echo 'class="active"'; ?>>
 								<a href="<?php echo site_url($url); ?>"><i class="icon-chevron-right"></i><?php echo $label; ?></a>
 							</li>

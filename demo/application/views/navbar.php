@@ -38,7 +38,7 @@
 							<?php endif; ?>
 							<?php endforeach; ?>
 							<?php if (isset($auth_user)): ?>
-							<li> <a href="http://localhost/foreximf/client">Live account</a></li>
+							<li> <a href="http://client.mysmartfx.vmt.co.id/">Live account</a></li>
 							<?php endif;?>
 						</ul>
 						<?php if (isset($auth_user)): ?>
