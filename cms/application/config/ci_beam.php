@@ -21,9 +21,9 @@ $config['languages']		= array(
  * 
  */
 $config['main_nav']			= array(
-	
-	'cms/cms'								=> 'Dashboard',	
-	'auth/user'							=> 'User',
+	'//'								=>'Dashboard',
+	'demo/demo'							=> 'Demo Account',	
+	'live_account/live_account'			=> 'Live Account',	
 	'acl'								=> array(
 		'acl/rule'		=> 'Rules',
 		'acl/role'		=> 'Roles',
