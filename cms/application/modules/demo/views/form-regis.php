@@ -24,14 +24,14 @@
 		margin-left:5px;
 	}
 </style>
-<div class="row">
-	<div class="span12">
-		<h3>Demo Register - ForexIMF</h3>
-	<hr />
-	</div>
-</div>
-<div class="row">	
-	<div class="span8">		
+<div class="row-fluid">
+	
+	<div class="block">	
+	<div class="navbar navbar-inner block-header">
+                                <div class="muted pull-left">Form Demo Account</div>
+                            </div>
+                            <div class="block-content collapse in">
+                                <div class="span12">
 		<form method="post" action="" class="form-horizontal" id="my-form">
 			<fieldset>
 			<div class="control-group">
@@ -108,17 +108,14 @@
 			<div class="form-actions ">
 				<input type="button" class="btn pull-right" value="Cancel"/> &nbsp; &nbsp;&nbsp;&nbsp;
 				<input  onclick="save(this);" type="submit" class="btn btn-primary pull-right" value="Save">
-				<div id="loading" class="pull-right"><img src="<?=base_url();?>assets/img/loader.gif" alt="" /></div>
+				<div id="loading" class="pull-right"><img src="<?=base_url();?>assets/images/loader.gif" alt="" /></div>
+			</div>
+			</fieldset>	
+		</form>
 		</div>
-		</fieldset>	
-</form>
-	</div>
-	<div class="span4">
-		
-		<div id="demo-form-valid">
-		
 		</div>
 	</div>
+	
 </div>
 <script type="text/javascript">
 function validateEmail(email) {
@@ -144,7 +141,8 @@ $("#email").change(function()
 				url: "<?=site_url();?>/demo/demo/cek_email",
 				data: "email="+email,
 				success: function(server_response){
-					$("#availability_status").ajaxComplete(function(event, request){
+					console.log(server_response);
+					//$("#availability_status").ajaxComplete(function(event, request){
 						if(server_response == '0')
 						{
 							$("#availability_status").html('<font color="Green">Tersedia </font>');
@@ -154,7 +152,7 @@ $("#email").change(function()
 						{
 							$("#availability_status").html('<font color="red">Sudah Digunakan </font>');
 						}
-					});
+					//});
 				}
 			});
 		}
@@ -166,13 +164,7 @@ $("#email").change(function()
 	return false;
 });
 $("#loading").hide();
-$('#tanggal input').datepicker({
-	format: "yyyy-mm-dd",
-    orientation: "auto left",
-    startView: 2,
-	autoclose: true,
-	todayHighlight: true,
-});
+
 function save(){
 	$("#my-form").validate({
 		rules:{

@@ -65,11 +65,12 @@ $config['beam_template']['css'] = array(
  */
 $config['beam_template']['js_header'] = array(
 	'vendors/modernizr-2.6.2-respond-1.1.0.min',
+	'vendors/jquery-1.9.1.min',
+	'bootstrap/js/bootstrap.min',
+	'assets/jquery.validate',
+	'assets/scripts',
 	
 );
 $config['beam_template']['js_footer'] = array(
-	'vendors/jquery-1.9.1.min',
-	'bootstrap/js/bootstrap.min',
-	'assets/scripts',
 	
 );

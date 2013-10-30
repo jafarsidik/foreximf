@@ -9,7 +9,7 @@
 									</li>
 	                                   
 	                                    <li>
-	                                        <a href="<?=base_url().'';?>" class="btn btn-primary">Add</a> <span class="divider">|</span>	
+	                                        <a href="<?=base_url().'index.php/demo/demo/add';?>" class="btn btn-primary">Add</a> <span class="divider">|</span>	
 	                                    </li>
 										
 	                                </ul>

@@ -29,6 +29,7 @@ class Demo extends MY_Controller
 		->set_js('vendors/datatables/js/jquery.dataTables.min',true)
 		->set_js('vendors/datatables/js/ColumnFilterWidgets',true)
 		->set_js('assets/DT_bootstrap',true)
+		->set_js('assets/jquery.validate')
 		->set_js_script('
 			$(function() {
             
@@ -42,7 +43,8 @@ class Demo extends MY_Controller
 		$this->template->build('index');
 	}
 	function add(){
-		$this->template->build('form_regis');
+		$this->data['city'] = $this->mgeneral->getAll('alamat_kabupaten');
+		$this->template->build('form-regis');
 	}
 	/**
 	 * Send data to Database and Email. 
