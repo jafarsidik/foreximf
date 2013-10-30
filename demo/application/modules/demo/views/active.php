@@ -111,11 +111,12 @@ $("#password").passStrength({
 function save(){
 	$("#my-form").validate({
 		rules:{
-			password		:"required",
+			password		:{required:"required", minlength: 3},
 			c_password		:{equalTo: "#password"},			
 		},
 		highlight: function(element) {
 			$(element).closest('input').removeClass('success').addClass('error');
+			
 		},
 		unhighlight:function(element){
 			$(element).closest('input').removeClass('error').addClass('success');
@@ -123,7 +124,8 @@ function save(){
 		success: function(element) {
 			element
 			.addClass('valid')
-			.closest('input').removeClass('error').addClass('success');
+			.closest('input').removeClass('error');
+			$("span").remove();
 		},
 		submitHandler: function(form){
 				//form.submit();
@@ -139,7 +141,7 @@ function save(){
 			},				
 			success:function(data){
 				console.log(data);
-					if(data.retcode==="10"){
+					if(data.retCode==="10"){
 						$.pnotify({
 							title: 'Invalid Parameter',
 							text: 'Invalid Parameter.',
@@ -151,6 +153,20 @@ function save(){
 						});
 					$("#loading").hide();
 					form.reset("#my-form");
+					}
+					else if(data.retCode==="06" || data.retCode==="07" || data.retCode==="08" || data.retCode==="09" || data.retCode==="05" ){
+						$.pnotify({
+							title: 'Check Password',
+							text: 'Password minimal 5 character, Mengandung Huruf Kecil, Huruf Besar,Digit dan Symbol',
+							animation: {
+								effect_in: 'show',
+								effect_out: 'slide'
+							},
+							type : "notice",
+						});
+						$("#loading").hide();
+							$("span").remove();
+						
 					}else if(data.retCode==='00'){
 						$.pnotify({
 							title: 'Sukses',
@@ -162,6 +178,7 @@ function save(){
 							type : "success",
 						});
 					$("#loading").hide();
+					$("span").remove();
 					form.reset("#my-form");
 					window.setTimeout( function(){ window.location = data.url;}, 3000 );
 					}else{

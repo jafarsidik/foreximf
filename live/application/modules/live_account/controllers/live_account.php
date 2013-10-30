@@ -100,9 +100,9 @@ class Live_account extends Admin_Controller
 		}
 		$data_live	= array(
 				'reg_option' 	=>$this->input->post('reg_option'),
-				'tanggal_lahir'	=>$this->input->post('tanggal_lahir'),
-				'bulan_lahir'	=>$this->input->post('bulan_lahir'),
-				'tahun_lahir'	=>$this->input->post('tahun_lahir'),
+				'tanggal_lahir'	=>$this->input->post('tanggal'),
+				'bulan_lahir'	=>$this->input->post('bulan'),
+				'tahun_lahir'	=>$this->input->post('tahun'),
 				
 				
 				'personal_name'	=>$this->input->post('name_personal'),

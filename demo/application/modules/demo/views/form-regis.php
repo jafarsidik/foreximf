@@ -79,23 +79,11 @@
 				<label class="control-label" for="inputfirstname">Date Of Birth</label>
 				<div class="controls">
 					Tanggal :
-					<select name="tanggal" id="tanggal" class="input-small">
-						<?php for($i = 1; $i <= 31; $i++){?>
-						<option value="<?=$i;?>"><?=$i;?></option>
-						<?php } ?>
-					</select>
+					<input class="input-small" type="text" id="tanggal" name="tanggal"  placeholder="dd"/>
 					Bulan :
-					<select name="bulan" id="bulan" class="input-small">
-						<?php for($i = 1; $i < 13; $i++){?>
-						<option value="<?=$i;?>"><?=$i;?></option>
-						<?php } ?>
-					</select>
+					<input class="input-small" type="text" id="bulan" name="bulan"  placeholder="mm"/>
 					Tahun :
-					<select name="tahun" id="tahun" class="input-small">
-						<?php $now = date('Y'); for($i = 1900; $i <= $now; $i++){?>
-						<option value="<?=$i;?>"><?=$i;?></option>
-						<?php } ?>
-					</select>
+					<input class="input-small" type="text" id="tahun" name="tahun"  placeholder="yyyy"/>
 				</div>
 			</div>
 			<div class="control-group">

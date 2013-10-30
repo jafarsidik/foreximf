@@ -15,7 +15,7 @@ class Demo extends MY_Controller
 	{
 		parent::__construct();
 		$this->load->model('mgeneral');
-		$this->load->helper('code');
+		$this->load->helper('my');
 		$this->ci =& get_instance();
 		$this->ci->load->library('PasswordHash', array('iteration_count_log2' => 8, 'portable_hashes' => FALSE));
 		$config['upload_path'] = './uploads/file';
@@ -157,6 +157,54 @@ class Demo extends MY_Controller
 				'role_id'		=>5,
 				'investor_password'	=>$this->input->post('investor_p'),
 			);
+			
+			// Password Strength check
+			if( strlen($hash) < 5 ) {
+				
+				$result['retCode']	= '06';
+				$result['retMsg']	= 'Password need to have at least 5 characters!';
+				$result['result']	= TRUE;
+				echo json_encode($result);	
+				exit();
+			}
+ 
+			if( strlen($hash) > 20 ) {
+				
+				$result['retCode']	= '07';
+				$result['retMsg']	= 'Password needs to have less than 20 characters!';
+				$result['result']	= TRUE;
+				echo json_encode($result);	
+				exit();
+			}
+ 
+			if( !preg_match("#[0-9]+#", $hash) ) {
+				
+				$result['retCode']	= '08';
+				$result['retMsg']	= 'Password must include at least one number!';
+				$result['result']	= TRUE;
+				echo json_encode($result);	
+				exit();
+			}
+ 
+ 
+			if( !preg_match("#[a-z]+#", $hash) ) {
+				
+				$result['retCode']	= '09';
+				$result['retMsg']	= 'Password must include at least one letter!';
+				$result['result']	= TRUE;
+				echo json_encode($result);	
+				exit();
+			}
+ 
+ 
+			if( !preg_match("#[A-Z]+#", $hash) ) {
+				
+				$result['retCode']	= '05';
+				$result['retMsg']	= 'Password must include at least one uppercase letter!';
+				$result['result']	= TRUE;
+				echo json_encode($result);	
+				exit();
+			}
 			if($data_login != null){
 				$pesan = "Username = ".$username." Password = ".$hash."";
 				$query1 = $this->mgeneral->update(array('id'=>$id), $data_login,'auth_users');

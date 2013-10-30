@@ -81,26 +81,11 @@
 				<label class="control-label" for="inputfirstname">Date Of Birth*</label>
 				<div class="controls">
 					Tanggal :
-					<select name="tanggal" id="tanggal" class="input-small">
-						<option value="<?php echo $demo['tanggal_lahir']; ?>" selected="true"><strong><?php echo $demo['tanggal_lahir']; ?></strong></option>
-						<?php for($i = 1; $i <= 31; $i++){?>
-						<option value="<?=$i;?>"><?=$i;?></option>
-						<?php } ?>
-					</select>
+					<input  value="<?php echo $demo['tanggal_lahir']; ?>" class="input-small" type="text" id="tanggal" name="tanggal"  placeholder="dd"/>
 					Bulan :
-					<select name="bulan" id="bulan" class="input-small">
-						<option value="<?php echo $demo['bulan_lahir']; ?>" selected="true"><strong><?php echo $demo['bulan_lahir']; ?></strong></option>
-						<?php for($i = 1; $i < 13; $i++){?>
-						<option value="<?=$i;?>"><?=$i;?></option>
-						<?php } ?>
-					</select>
+					<input value="<?php echo $demo['bulan_lahir']; ?>" class="input-small" type="text" id="bulan" name="bulan"  placeholder="mm"/>
 					Tahun :
-					<select name="tahun" id="tahun" class="input-small">
-						<option value="<?php echo $demo['tahun_lahir']; ?>" selected="true"><strong><?php echo $demo['tahun_lahir']; ?></strong></option>
-						<?php $now = date('Y'); for($i = 1900; $i <= $now; $i++){?>
-						<option value="<?=$i;?>"><?=$i;?></option>
-						<?php } ?>
-					</select>
+					<input value="<?php echo $demo['tahun_lahir']; ?>" class="input-small" type="text" id="tahun" name="tahun"  placeholder="yyyy"/>
 				</div>
 			</div>
 			</div>
@@ -128,11 +113,8 @@
 					<div class="control-group">
 						<label class="control-label" for="inputfirstname">Citizenship</label>
 						<div class="controls">
-							<select name="pnegara" id="pnegara" data-required="true">
-								<?php foreach($negara as $n){?>								
-									<option value="<?=$n->nicename;?>"><?=$n->nicename;?></option>
-								<?php }?>						
-							</select>
+						<input type="text" name="pnegara" id="pnegara" data-required="true" />
+							
 						</div>
 					</div>
 			  </div>
@@ -182,33 +164,21 @@
 					<div class="control-group">
 						<label class="control-label" for="inputfirstname">Phone*</label>
 							<div class="controls">
-							<select name="ccodephone" id="ccodephone" data-required="true" class="input-medium">
-								<?php foreach($negara as $n){?>								
-									<option  value="<?=$n->phonecode;?>"><?php echo $n->name." +".$n->phonecode;?></option>
-								<?php }?>						
-							</select>
+							
 							<input class="input-large"type="text"  name="cphone" id="cphone" placeholder="Phone" data-required="true">
 						</div>
 					</div>
 					<div class="control-group">
 						<label class="control-label" for="inputfirstname">Mobile*</label>
 							<div class="controls">
-							<select name="ccodemobile" id="ccodemobile" data-required="true" class="input-medium">
-								<?php foreach($negara as $n){?>								
-									<option  value="<?=$n->phonecode;?>">+<?php echo $n->name." ".$n->phonecode;?></option>
-								<?php }?>						
-							</select>
+							
 							<input class="input-large"type="text"  name="cmobile" id="cmobile" placeholder="Mobile" data-required="true">
 						</div>
 					</div>
 					<div class="control-group">
 						<label class="control-label" for="inputfirstname">Fax*</label>
 							<div class="controls">
-							<select name="ccodefax" id="ccodefax" data-required="true" class="input-medium">
-								<?php foreach($negara as $n){?>								
-									<option  value="<?=$n->phonecode;?>">+<?php echo $n->name." ".$n->phonecode;?></option>
-								<?php }?>						
-							</select>
+							
 							<input class="input-large" type="text"  name="cfax" id="cfax" placeholder="Fax" data-required="true">
 						</div>
 					</div>
