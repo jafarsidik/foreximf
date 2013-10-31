@@ -23,5 +23,6 @@ $config['languages']		= array(
 $config['main_nav']			= array(
 	'//'								=> 'Home',
 	'demo/demo'							=> 'Demo Register',
+	'live_account/live_account'							=> 'Live Account',
 	
 );

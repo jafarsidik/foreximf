@@ -38,7 +38,7 @@ class Demo extends MY_Controller
 		//$this->data['registration'] = $this->mgeneral->getAll('auth_users','name','asc');
 		$this->data['reg'] =$this->db->query("SELECT * FROM auth_users au 
 				left join demo_account la on au.email = la.email 
-				JOIN (SELECT id FROM auth_users where username <> 'admin' ORDER BY registered LIMIT 0, 10) AS t ON t.id = au.id")->result();
+				JOIN (SELECT id FROM auth_users where username <> 'admin' and role_id='2' ORDER BY registered LIMIT 0, 10) AS t ON t.id = au.id")->result();
 					
 		$this->template->build('index');
 	}

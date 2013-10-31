@@ -1,11 +1,11 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 /**
- * User management controller.
+ * Live Account controller.
  * 
  * @package App
  * @category Controller
- * @author Ardi Soebrata
+ * @author Muhamad Jafar Sidik
  */
 class Live_account extends Admin_Controller 
 {
@@ -21,54 +21,37 @@ class Live_account extends Admin_Controller
 		$this->load->helper('code');
 		$this->ci =& get_instance();
 		$this->ci->load->library('PasswordHash', array('iteration_count_log2' => 8, 'portable_hashes' => FALSE));
+		$this->load->library('upload');
 	}
 	
-	
-	function index()
-	{		
-		$this->template
-		->set_title('Registration')
-		->set_css('assets/DT_bootstrap')
-		//->set_css('vendors/datatables/css/ColumnFilterWidgets')
-		->set_js('vendors/datatables/js/jquery.dataTables.min',true)
-		->set_js('vendors/datatables/js/ColumnFilterWidgets',true)
-		->set_js('assets/DT_bootstrap',true)
-		->set_js('assets/jquery.validate')
-		->set_js_script('
-			$(function() {
-            
-			});
-		','jeff',true);
-		//$this->data['registration'] = $this->mgeneral->getAll('auth_users','name','asc');
-		$this->data['reg'] =$this->db->query("SELECT * FROM auth_users au 
-				left join live_account la on au.email = la.contact_info_email 
-				JOIN (SELECT id FROM auth_users where username <> 'admin' and role_id='6' ORDER BY registered LIMIT 0, 10) AS t ON t.id = au.id")->result();
-					
-		$this->template->build('index');
-	}
 	/**
 	 * Display Form. 
 	 */
-	function add()
+	function index()
 	{	
-		$id = $this->auth->userid();
-		$this->data['negara'] = $this->mgeneral->getAll('country','name','asc');
-		/* $user = $this->db->query("select * from acl_roles role,auth_users au,profile_demo_reg p where au.email = p.email and role.id = au.role_id and au.id='".$id."'")->row();
-		$this->data['demo'] = array(
-			'id'			=> $user->id,
-			'first_name'	=> $user->first_name,
-			'last_name'		=> $user->last_name,
-			'username'		=> $user->username,
-			'email'			=> $user->email,
-			'lang'			=> $user->lang,
-			'role_id'		=> $user->role_id,
-			'role_name'		=> $user->name,
-			'title'			=> $user->title,
-			'date_of_birth'	=> $user->date_of_birth
-		); */
-		//$this->template->build('form-regis');
-		$this->template->build('live_account_form');
+		$id 					= $this->auth->userid();
+		$email 					= $this->db->query("select * from auth_users where id='".$id."'")->row();
+		$this->data['negara']	= $this->mgeneral->getAll('country','name','asc');
 		
+		$user = $this->db->query("select *
+		
+		from acl_roles role,auth_users au,demo_account p where  au.email ='".$email->email."' and p.email= au.email and role.id = au.role_id ")->row_array();
+
+		 $this->data['demo'] = array(
+			'id'			=> $user['id'],
+			'first_name'	=> $user['first_name'],
+			'last_name'		=> $user['last_name'],
+			'username'		=> $user['username'],
+			'email'			=> $user['email'],
+			'lang'			=> $user['lang'],
+			'role_id'		=> $user['role_id'],
+			'role_name'		=> $user['name'],
+			'title'			=> $user['title'],
+			'tanggal_lahir'	=> $user['tanggal_lahir'],
+			'bulan_lahir'	=> $user['bulan_lahir'],
+			'tahun_lahir'	=> $user['tahun_lahir']
+		); 
+		$this->template->build('live_account_form');		
 	}
  	function search()
 	{
@@ -89,7 +72,6 @@ class Live_account extends Admin_Controller
             'agent_picture' =>htmlentities(stripslashes($row->picture))
          );
       }
-      // minimal PHP 5.2
       echo json_encode($arr);
 	}	
 	
@@ -97,38 +79,35 @@ class Live_account extends Admin_Controller
 	 * Send data to Database and Email. 
 	 */
 	function send(){
-		$result	= array();
-	/* 	if(!isset($_POST['email']) and !isset($_POST['first_name'])){
-			$result['retCode'] = '10';
-			$result['retMsg'] = 'Invalid param.';
-			$result['result'] = FALSE;
-		}else{ */
-			
-			$id = $this->input->post('id');
-			$username = $this->input->post('username');
-			$date = date('Y-m-d H:i:s');
-			$data_login	= array(				
-				//'email' 		=>$this->input->post('cemail'),
+		
+		$result		= array();
+		$id			= $this->input->post('id');
+		$username	= $this->input->post('username');
+		$date 		= date('Y-m-d H:i:s');
+		$data_login	= array(
+				'title' 		=>$this->input->post('title'),
 				'first_name'	=>$this->input->post('first_name'),
 				'last_name'		=>$this->input->post('last_name'),				
 				'registered'	=>$date,
-				
-				
-				
-			);
-			$phone = $this->input->post('ccodephone')." - ".$this->input->post('cphone');
-			$moblie = $this->input->post('ccodemobile')." - ".$this->input->post('cmobile');
-			$fax = $this->input->post('ccodefax')." - ".$this->input->post('cfax');
-			$data_live	= array(
+		);
+		$phone = $this->input->post('ccodephone')." - ".$this->input->post('cphone');
+		$mobile = $this->input->post('ccodemobile')." - ".$this->input->post('cmobile');
+		$fax = $this->input->post('ccodefax')." - ".$this->input->post('cfax');
+		
+		$checked = $_POST['invest'];
+		for($i=0; $i < count($checked); $i++){
+			$inves[] = $checked[$i];
+		}
+		$data_live	= array(
 				'reg_option' 	=>$this->input->post('reg_option'),
-				'title' 		=>$this->input->post('title'),
-				'first_name'	=>$this->input->post('first_name'),
-				'last_name'		=>$this->input->post('last_name'),
-				'date_of_birth'	=>$this->input->post('date'),
+				'tanggal_lahir'	=>$this->input->post('tanggal'),
+				'bulan_lahir'	=>$this->input->post('bulan'),
+				'tahun_lahir'	=>$this->input->post('tahun'),
+				
 				
 				'personal_name'	=>$this->input->post('name_personal'),
 				'personal_idnumber'	=>$this->input->post('passport'),
-				'personal_iddocument'	=>$this->input->post('doc'),
+				//'personal_iddocument'	=>'',
 				'personal_citizenship'	=>$this->input->post('pnegara'),
 				'contact_info_email'	=>$this->input->post('cemail'),
 				'contact_info_address'	=>$this->input->post('caddress'),
@@ -139,8 +118,8 @@ class Live_account extends Admin_Controller
 				'contact_info_phone'	=>$phone,
 				'contact_info_mobile'	=>$mobile,
 				'contact_info_fax'	=>$fax,
-				'contact_info_corespondence'	=>$this->input->post('ccorespondeaddress'),
-				'contact_info_profofresidence'	=>$this->input->post('cprof'),
+				'contact_info_correspondence'	=>$this->input->post('ccorespondeaddress'),
+				//'contact_info_profofresidance'	=>$this->input->post('cprof'),
 				'account_info_agentcode'	=>$this->input->post('ai'),
 				
 				'bank_info_bankname'	=>$this->input->post('bankname'),
@@ -150,6 +129,7 @@ class Live_account extends Admin_Controller
 				'bank_info_bankaccountholder'	=>$this->input->post('bankaccountholder'),
 				'account_info_agentcode'	=>$this->input->post('textyes'),
 				
+				'tranding_info_invenstments'	=>implode(",",$inves),
 				'tranding_info_annualincome'	=>$this->input->post('anualincome'),
 				'tranding_info_trandingexperience'	=>$this->input->post('tradingex'),
 				'tranding_info_riskprofile'	=>$this->input->post('risk'),
@@ -159,7 +139,7 @@ class Live_account extends Admin_Controller
 				
 			);
 			
-			$links = "http://client.mysmartfx/index.php/live_account/live_account/active/?key=".$username;
+			$links = "http://client.mysmartfx.vmt.co.id/index.php/live_account/live_account/active/?key=".$username; // change your url
 			$pesan = "Dear All Valuable Customer,
 
 					Terima kasih  telah menggunakan  imfutures  sebagai pilihan anda untuk melakukan transaksi trading, dan itu PILIHAN YANG TEPAT .
@@ -188,8 +168,9 @@ class Live_account extends Admin_Controller
 				$this->email->from('noreply@foreximf.com','Marketing - IMFutures');
 				$this->email->to($this->input->post('cemail')); 			
 				$this->email->subject('Live Account Register');
-				$this->email->message($pesan);	
+				$this->email->message($pesan);
 				$result['retCode'] = '00';
+				$result['url']		= 'http://client.mysmartfx.vmt.co.id/'; //change your url
 				$result['retMsg'] = 'Success To Registrasi but not active your account.';
 				$result['result'] = TRUE;
 			}else{				
@@ -197,10 +178,8 @@ class Live_account extends Admin_Controller
 				$result['retMsg'] = 'Error Registration.';
 				$result['result'] = TRUE;
 			}
-		//}
-		$result['links'] = "http://client.mysmartfx/index.php/live_account/live_account/active/?key=".$username;
-		echo json_encode($result);
-		//$this->output->set_content_type('application/json')->set_output(json_encode($result));
+		$this->output->set_content_type('application/json')->set_output(json_encode($result));
+		
 	}
 	
 	function active(){	
@@ -214,53 +193,16 @@ class Live_account extends Admin_Controller
 				'active'		=>'2',
 				'registered'	=>$date,
 				'lang'			=>'id',
-								
+				'approval'		=>'1',				
 			);
 			$query1 = $this->mgeneral->update(array('username'=>$key), $data_login,'auth_users');			
-			echo "Akun live account anda sudah aktif tapi belum di approval oleh admin";
 			
-			//$this->data['user'] 	=  $this->mgeneral->getWhere(array('username'=>$key),'auth_users');
-			//$this->template->build('active');
+			
+			
+			$this->template->build('active');
 		}
 		
-	}/* 
-	function exe_active(){
-		$result	= array();
-		if(!isset($_POST['password']) and !isset($_POST['c_password'])){
-			$result['retCode'] = '10';
-			$result['retMsg'] = 'Invalid param.';
-			$result['result'] = FALSE;
-		}else{
-			
-			$date	= date('Y-m-d H:i:s');
-			$id 	= $this->input->post('id');
-			$hash	= $this->input->post('c_password');
-			$data_login	= array(
-				
-				'password'		=> $this->ci->passwordhash->HashPassword($hash),
-				'active'		=>'1',
-				'registered'	=>$date,
-				'lang'			=>'id',
-				'role_id'		=>5,
-				'investor_password'	=>$this->input->post('investor_p'),
-			);
-			if($data_login != null){
-				
-				$query1 = $this->mgeneral->update(array('id'=>$id), $data_login,'auth_users');
-				
-				$result['retCode'] = '00';
-				$result['retMsg'] = 'Success To Activation Register your account.';
-				$result['result'] = TRUE;
-			}else{				
-				$result['retCode'] = '01';
-				$result['retMsg'] = 'Error Activation Register your account.';
-				$result['result'] = TRUE;
-			}
-		}
-		echo json_encode($result);
-			
-	} */
-	
+	}
 	function agent_code(){
 		// tangkap variabel keyword dari URL
       $keyword = $this->uri->segment(3);
