@@ -476,8 +476,25 @@ $(document).ready(function() {
 			ivread			:{required:true},
 			
 		},
+		
 		highlight: function(element) {
 			$(element).closest('input').removeClass('success').addClass('error');
+			//if(!isNaN(this.value)) {
+                    /* $.pnotify({
+							title: 'Please Required',
+							text: 'Please Required',
+							animation: {
+								effect_in: 'show',
+								effect_out: 'slide'
+							},
+							type : "notice",
+						}); */
+                //}
+
+          
+			 
+				  
+			
 		},
 		unhighlight:function(element){
 			$(element).closest('input').removeClass('error').addClass('success');
