@@ -219,8 +219,35 @@ class Demo extends MY_Controller
 				echo json_encode($result);	
 				exit();
 			}
+			$pesan = "Username = ".$username." Password = ".$hash."";
+			$pesan 			=
+								"
+								Dear All Valuable Customer,
+
+								Terima kasih  telah menggunakan  imfutures  sebagai pilihan anda untuk melakukan transaksi trading, dan itu PILIHAN YANG TEPAT .
+
+								Melalui  Email ini, kami mengingatkan kembali kepada anda tentang Layanan  dari imfutures :
+
+								Livechat 24 jam ( Senin -  Jum’at ), layanaan ini dalam bentuk Customer Support dan Technical Support
+								Analysis Support , adalah bagian yang  membantu anda memberikan analisa pergerakan pasar terupdate. Kami sangat menyarankan kepada anda untuk memanfaat fasilitas layanan ini untuk membantu anda melakukan trading, sehingga bisa memaksimalkan profit dan menekan resiko anda.
+								WEBINAR, adalah Training Live , kami sangat menyarankan anda bisa mengikuti webinar ini, karena dalam webinar akan dibahas mengenai Pengetahuan Trading dari Basic – Advance, dan dalam webinar ini membahas Tips dan Trik dalam melakukan trading, sehingga bisa menekan resiko dan memaksimalkan profit anda.
+								
+								Username  = '".$username."'
+								Password  = '".$hash."'
+								Demikian diinformasikan kepada Anda , agar menjadi informasi yg berguna.
+
+								Terima kasih
+
+								Customer Care  - imfutures
+
+								 
+
+								-----------------------
+
+								Mohon diperhatikan !! Bisnis online trading merupakan bisnis yang memiliki resiko yang sangat  tinggi Sebaiknya anda meminta pendapat  dari Independent Financial Advisor, dan bertindak selalu berhati-hati dalam mengambil keputusan, karena dalam hal ini imfutures tidak bertanggung jawab atas kerugian yang diderita oleh anda
+								";
 			if($data_login != null){
-				$pesan = "Username = ".$username." Password = ".$hash."";
+				
 				$query1 = $this->mgeneral->update(array('id'=>$id), $data_login,'auth_users');
 				$this->email->from('noreply@foreximf.com','Marketing - IMFutures');
 				$this->email->to($this->input->post('email')); 			

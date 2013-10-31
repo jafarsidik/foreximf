@@ -192,7 +192,8 @@ class Live_account extends Admin_Controller
 			$data_login	= array(
 				'active'		=>'2',
 				'registered'	=>$date,
-				'lang'			=>'id'				
+				'lang'			=>'id',
+				'role_id'		=>'6',				
 			);
 			$query1 = $this->mgeneral->update(array('username'=>$key), $data_login,'auth_users');			
 			

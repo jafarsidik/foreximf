@@ -24,9 +24,9 @@
 	</div>
 </div>
 <div class="row">	
-	<div class="span2"></div>
-	<div class="span8">
-		<form method="post" action="" class="form-horizontal" id="my-form" enctype="multipart/form-data">
+	<div class="span1"></div>
+	<div class="span9">
+		<form method="post" action="" class="form-horizontal" id="my-form" enctype= "multipart/form-data">
 		<input type="hidden" value="<?=$demo['id'];?>" name="id" id="id" />
 		<input type="hidden" value="<?=$demo['username'];?>" name="username" id="username" />
 		
@@ -80,9 +80,12 @@
 			<div class="control-group">
 				<label class="control-label" for="inputfirstname">Date Of Birth*</label>
 				<div class="controls">
-					<div id="tanggal">
-					<input type="text" name="date" id="date" value="<?php echo $demo['date_of_birth'];?>" class="input-xlarge" />
-					</div>
+					Tanggal :
+					<input  value="<?php echo $demo['tanggal_lahir']; ?>" class="input-small" type="text" id="tanggal" name="tanggal"  placeholder="dd"/>
+					Bulan :
+					<input value="<?php echo $demo['bulan_lahir']; ?>" class="input-small" type="text" id="bulan" name="bulan"  placeholder="mm"/>
+					Tahun :
+					<input value="<?php echo $demo['tahun_lahir']; ?>" class="input-small" type="text" id="tahun" name="tahun"  placeholder="yyyy"/>
 				</div>
 			</div>
 			</div>
@@ -104,17 +107,14 @@
 					<div class="control-group">
 						<label class="control-label" for="inputfirstname">Send Attach ID Document</label>
 							<div class="controls">
-							<input class="input-xlarge"type="file"  name="doc" id="doc" placeholder="Document" data-required="true">
+							<input class="input-xlarge" type="file"  name="docs" id="docs" placeholder="Document" data-required="true">
 						</div>
 					</div>
 					<div class="control-group">
 						<label class="control-label" for="inputfirstname">Citizenship</label>
 						<div class="controls">
-							<select name="pnegara" id="pnegara" data-required="true">
-								<?php foreach($negara as $n){?>								
-									<option value="<?=$n->nicename;?>"><?=$n->nicename;?></option>
-								<?php }?>						
-							</select>
+						<input type="text" name="pnegara" id="pnegara" data-required="true" />
+							
 						</div>
 					</div>
 			  </div>
@@ -164,33 +164,21 @@
 					<div class="control-group">
 						<label class="control-label" for="inputfirstname">Phone*</label>
 							<div class="controls">
-							<select name="ccodephone" id="ccodephone" data-required="true" class="input-medium">
-								<?php foreach($negara as $n){?>								
-									<option  value="<?=$n->phonecode;?>"><?php echo $n->name." +".$n->phonecode;?></option>
-								<?php }?>						
-							</select>
+							
 							<input class="input-large"type="text"  name="cphone" id="cphone" placeholder="Phone" data-required="true">
 						</div>
 					</div>
 					<div class="control-group">
 						<label class="control-label" for="inputfirstname">Mobile*</label>
 							<div class="controls">
-							<select name="ccodemobile" id="ccodemobile" data-required="true" class="input-medium">
-								<?php foreach($negara as $n){?>								
-									<option  value="<?=$n->phonecode;?>">+<?php echo $n->name." ".$n->phonecode;?></option>
-								<?php }?>						
-							</select>
+							
 							<input class="input-large"type="text"  name="cmobile" id="cmobile" placeholder="Mobile" data-required="true">
 						</div>
 					</div>
 					<div class="control-group">
 						<label class="control-label" for="inputfirstname">Fax*</label>
 							<div class="controls">
-							<select name="ccodefax" id="ccodefax" data-required="true" class="input-medium">
-								<?php foreach($negara as $n){?>								
-									<option  value="<?=$n->phonecode;?>">+<?php echo $n->name." ".$n->phonecode;?></option>
-								<?php }?>						
-							</select>
+							
 							<input class="input-large" type="text"  name="cfax" id="cfax" placeholder="Fax" data-required="true">
 						</div>
 					</div>
@@ -458,9 +446,9 @@ $(document).ready(function() {
 		$("#my-form").validate({
 		//onfocusout: false,onkeyup: false,onclick: false,
 		rules:{			
-			title		:{required:true},
+			 title		:{required:true},
 			first_name	:{required:true},
-			/* last_name	:{required:true},
+			last_name	:{required:true},
 			date		:{required:true},
 			passport	:{required:true},
 			cemail		:{required:true,email:true},
@@ -485,7 +473,7 @@ $(document).ready(function() {
 			maccount	:{required:true},
 			wk			:{required:true},
 			hd			:{required:true},
-			ivread			:{required:true}, */
+			ivread			:{required:true},
 			
 		},
 		highlight: function(element) {
@@ -539,7 +527,6 @@ $(document).ready(function() {
 			$.ajax({
 			url: "<?=site_url('live_account/live_account/send');?>",
 			type: "POST",
-			dataType:"json",
 			data: $("#my-form").serialize(),
 			beforeSend: function(){
 				$("#loading").show();				
@@ -569,7 +556,7 @@ $(document).ready(function() {
 							type : "success",
 						});
 					$("#loading").hide();					
-					setTimeout('location.reload()', 3000);
+					window.setTimeout( function(){ window.location = data.url;}, 3000 );
 					}else{
 						$.pnotify({
 							title: 'Error',

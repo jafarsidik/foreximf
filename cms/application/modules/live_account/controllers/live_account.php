@@ -23,14 +23,37 @@ class Live_account extends Admin_Controller
 		$this->ci->load->library('PasswordHash', array('iteration_count_log2' => 8, 'portable_hashes' => FALSE));
 	}
 	
+	
+	function index()
+	{		
+		$this->template
+		->set_title('Registration')
+		->set_css('assets/DT_bootstrap')
+		//->set_css('vendors/datatables/css/ColumnFilterWidgets')
+		->set_js('vendors/datatables/js/jquery.dataTables.min',true)
+		->set_js('vendors/datatables/js/ColumnFilterWidgets',true)
+		->set_js('assets/DT_bootstrap',true)
+		->set_js('assets/jquery.validate')
+		->set_js_script('
+			$(function() {
+            
+			});
+		','jeff',true);
+		//$this->data['registration'] = $this->mgeneral->getAll('auth_users','name','asc');
+		$this->data['reg'] =$this->db->query("SELECT * FROM auth_users au 
+				left join live_account la on au.email = la.contact_info_email 
+				JOIN (SELECT id FROM auth_users where username <> 'admin' and role_id='6' ORDER BY registered LIMIT 0, 10) AS t ON t.id = au.id")->result();
+					
+		$this->template->build('index');
+	}
 	/**
 	 * Display Form. 
 	 */
-	function index()
+	function add()
 	{	
 		$id = $this->auth->userid();
 		$this->data['negara'] = $this->mgeneral->getAll('country','name','asc');
-		$user = $this->db->query("select * from acl_roles role,auth_users au,profile_demo_reg p where au.email = p.email and role.id = au.role_id and au.id='".$id."'")->row();
+		/* $user = $this->db->query("select * from acl_roles role,auth_users au,profile_demo_reg p where au.email = p.email and role.id = au.role_id and au.id='".$id."'")->row();
 		$this->data['demo'] = array(
 			'id'			=> $user->id,
 			'first_name'	=> $user->first_name,
@@ -42,7 +65,7 @@ class Live_account extends Admin_Controller
 			'role_name'		=> $user->name,
 			'title'			=> $user->title,
 			'date_of_birth'	=> $user->date_of_birth
-		);
+		); */
 		//$this->template->build('form-regis');
 		$this->template->build('live_account_form');
 		
@@ -89,6 +112,7 @@ class Live_account extends Admin_Controller
 				'first_name'	=>$this->input->post('first_name'),
 				'last_name'		=>$this->input->post('last_name'),				
 				'registered'	=>$date,
+				
 				
 				
 			);
@@ -189,7 +213,8 @@ class Live_account extends Admin_Controller
 			$data_login	= array(
 				'active'		=>'2',
 				'registered'	=>$date,
-				'lang'			=>'id'				
+				'lang'			=>'id',
+				'role_id'		=>'6',				
 			);
 			$query1 = $this->mgeneral->update(array('username'=>$key), $data_login,'auth_users');			
 			echo "Akun live account anda sudah aktif tapi belum di approval oleh admin";

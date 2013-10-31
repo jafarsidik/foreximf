@@ -8,10 +8,7 @@
 	                                    <i class="icon-chevron-right show-sidebar" style="display:none;"><a href='#' title="Show Sidebar" rel='tooltip'>&nbsp;</a></i>
 									</li>
 	                                   
-	                                    <li>
-	                                        <a href="<?=base_url().'index.php/demo/demo/add';?>" class="btn btn-primary">Add</a> <span class="divider">|</span>	
-	                                    </li>
-										
+	                                  
 	                                </ul>
                             	</div>
                         	</div>
@@ -30,6 +27,7 @@
 												<th>Email</th>
 												<th>Status Account</th>
 												<th>Register Date</th>
+												<th>Action</th>
 											</tr>
 										</thead>
 										<tbody>
@@ -39,16 +37,24 @@
 												<td><a href="<?php echo base_url().'auth/user/edit/'.$r->email;?>"><?=$r->email;?></a></td>
 												<td>
 													<?php 
-													if($r->active =="0"){
-														echo "<strong style='color:red'>Un Verified Account</strong>";
+													if($r->approval =="0"){
+														echo "<strong style='color:red'>Un Approval</strong>";
 													}else{
-														echo "<strong style='color:green'>Verified Account</strong>";
+														echo "<strong style='color:green'>Approval</strong>";
 													}
 													?>
 												</td>
 												
 												<td><?=$r->registered;?></td>
-												
+												<td>
+												<?php 
+													if($r->approval =="0"){
+														echo "<a href='#' class='btn btn-info btn-small'>Approval</a>";
+													}else{
+														echo "<a href='#' class='btn btn-info btn-small'>Un Approval</a>";
+													}
+													?>
+												</td>
 												
 											</tr>
 										<?php }?>
