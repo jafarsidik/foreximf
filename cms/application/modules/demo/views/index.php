@@ -21,8 +21,36 @@
                             <div class="navbar navbar-inner block-header">
                                 <div class="muted pull-left"><?=$template['title']; ?></div>
                             </div>
+							
                             <div class="block-content collapse in">
+							
                                 <div class="span12">
+								<form action="" method="GET" id="my-form" class="form-inline">
+									
+										   <select name="bulan" id="bulan" class="span2">
+                                            	<option value="0">All Dates</option>
+                                            	<option value="1">Januari <?=date("Y");?></option>
+                                            	<option value="2">Febuari <?=date("Y");?></option>
+                                            	<option value="3">Maret <?=date("Y");?></option>
+                                            	<option value="4">April <?=date("Y");?></option>
+                                            	<option value="5">Mei <?=date("Y");?></option>
+                                            	<option value="6">Juni <?=date("Y");?></option>
+                                            	<option value="7">Juli <?=date("Y");?></option>
+                                            	<option value="8">Agustus <?=date("Y");?></option>
+                                            	<option value="9">September <?=date("Y");?></option>
+                                            	<option value="10">Okotber <?=date("Y");?></option>
+                                            	<option value="11">November <?=date("Y");?></option>
+                                            	<option value="12">Desember <?=date("Y");?></option>
+                                            </select>
+										
+										   <select name="status" id="status" class="span2">
+                                            	<option value="10">All Status</option>
+                                            	<option value="1">Verified Account</option>
+                                            	<option value="0">Un Verified Account</option>
+                                            </select>
+											<input onclick="cek(this);" type="button" class="btn btn-small" value="Filter">
+                                          
+								</form>
   									<table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="example">
 										<thead>
 											<tr>
@@ -55,9 +83,30 @@
 											
 										</tbody>
 									</table>
+									<div id="result"></div>
                                 </div>
                             </div>
                         </div>
                         <!-- /block -->
                     </div>
+<script type="text/javascript">
+function cek(){
+var date = $('#bulan').val();
+var status = $('#status').val();
+
+$.ajax({
+			url: "<?=site_url('demo/demo/cek');?>",				
+			type: "GET",
+			//dataType:"json",
+			data: $("#my-form").serialize(),
+			beforeSend: function(){
+				$("#loading").show();				
+			},				
+			success:function(data){
+				
+				$("#result").html(data)
+			}
+});
+}
+</script>
 					

@@ -7,7 +7,7 @@
  * @category Controller
  * @author Muhamad Jafar Sidik
  */
-class Cms extends Admin_Controller 
+class Dashboard extends Admin_Controller 
 {
 	private $ci;
 	

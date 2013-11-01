@@ -25,20 +25,18 @@ class Demo extends MY_Controller
 		$this->template
 		->set_title('Registration')
 		->set_css('assets/DT_bootstrap')
-		//->set_css('vendors/datatables/css/ColumnFilterWidgets')
 		->set_js('vendors/datatables/js/jquery.dataTables.min',true)
-		->set_js('vendors/datatables/js/ColumnFilterWidgets',true)
 		->set_js('assets/DT_bootstrap',true)
 		->set_js('assets/jquery.validate')
 		->set_js_script('
 			$(function() {
-            
+				
 			});
 		','jeff',true);
 		//$this->data['registration'] = $this->mgeneral->getAll('auth_users','name','asc');
 		$this->data['reg'] =$this->db->query("SELECT * FROM auth_users au 
 				left join demo_account la on au.email = la.email 
-				JOIN (SELECT id FROM auth_users where username <> 'admin' and role_id='2' ORDER BY registered LIMIT 0, 10) AS t ON t.id = au.id")->result();
+				JOIN (SELECT id FROM auth_users where username <> 'admin' and role_id <> '6' ORDER BY registered LIMIT 0, 10) AS t ON t.id = au.id")->result();
 					
 		$this->template->build('index');
 	}
@@ -282,7 +280,13 @@ class Demo extends MY_Controller
 			}
 		}
 	}
-	
+	function cek(){
+		$date 	= $this->input->get('date');
+		$status	= $this->input->get('status');
+		$result = array();
+		$sql	= $this->db->query("select * from auth_users where active ='".$status."'")->result();
+		print_r($sql);
+	}
 	
 }
 
