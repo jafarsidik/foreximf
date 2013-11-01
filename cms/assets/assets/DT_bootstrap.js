@@ -156,7 +156,18 @@ $(document).ready(function() {
 		"oLanguage": {
 			"sLengthMenu": "_MENU_ records per page"
 		},
-		
-		
-	} );
+	});
+	$('#dataTable').dataTable({
+		"sDom": "W<'row'<'span6'l><'span6'f>r>t<'row'<'span6'i><'span6'p>>",
+        "sPaginationType": "bootstrap",
+		"oLanguage": {
+			"sLengthMenu": "_MENU_ records per page"
+		},
+		"bProcessing": true,
+		"bServerSide": true,
+		"sAjaxSource": "<?php echo base_url();?>demo/demo/load",
+		"aoColumns": [
+			{ "sClass": "name", "mData": 0 }
+		],
+	});
 } );

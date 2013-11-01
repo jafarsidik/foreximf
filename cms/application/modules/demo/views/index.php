@@ -61,6 +61,8 @@
 											</tr>
 										</thead>
 										<tbody>
+										
+									
 										<?php foreach ($reg as $r){ ?>
 											<tr>
 												<td><?=$r->first_name;?> <?=$r->last_name;?></td>
@@ -80,7 +82,7 @@
 												
 											</tr>
 										<?php }?>
-											
+									
 										</tbody>
 									</table>
 									<div id="result"></div>
@@ -90,6 +92,7 @@
                         <!-- /block -->
                     </div>
 <script type="text/javascript">
+
 function cek(){
 var date = $('#bulan').val();
 var status = $('#status').val();

@@ -40,6 +40,13 @@ class Demo extends MY_Controller
 					
 		$this->template->build('index');
 	}
+	function load(){
+		$result = $this->data['reg'] =$this->db->query("SELECT * FROM auth_users au 
+				left join demo_account la on au.email = la.email 
+				JOIN (SELECT id FROM auth_users where username <> 'admin' and role_id <> '6' ORDER BY registered LIMIT 0, 10) AS t ON t.id = au.id")->result();
+		$r = array("aaData" => $result);
+		echo json_encode($r);
+	}
 	function add(){
 		$this->data['city'] = $this->mgeneral->getAll('alamat_kabupaten');
 		$this->template->build('form-regis');
